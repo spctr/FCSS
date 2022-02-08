@@ -1,0 +1,223 @@
+---
+title: "Integrating Survey Data with Digital Trace Data"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r download data, include=FALSE}
+library(gtrendsR)
+gtrendsresultau <- gtrends(keyword = "/m/02gr_", geo = c("AU",
+"PE",
+"NZ",
+"PR",
+"GT"), time="2019-02-19 2020-10-11", low_search_volume = T) 
+gtrendsresultec <- gtrends(keyword = "/m/02gr_", geo = c(
+"EC",
+"CO",
+"JP",
+"MX",
+"CL"), time="2019-02-19 2020-10-11", low_search_volume = T) 
+gtrendsresultng <- gtrends(keyword = "/m/02gr_", geo = c(
+"NG",
+"BR",
+"CA",
+"RS",
+"HK"), time="2019-02-19 2020-10-11", low_search_volume = T) 
+gtrendsresultar <- gtrends(keyword = "/m/02gr_", geo = c(
+"AR",
+"MY",
+"PH",
+"ID",
+"SG"), time="2019-02-19 2020-10-11", low_search_volume = T) 
+
+```
+```{r load data, include=FALSE}
+gtrendsresultro <- gtrends(keyword = "/m/02gr_", geo = c(
+"RO",
+"PK",
+"KZ",
+"GR",
+"EG"
+), time="2019-02-19 2020-10-11", low_search_volume = T) 
+
+gtrendsresultde <- gtrends(keyword = "/m/02gr_", geo = c(
+"DE",
+"UA",
+"TH",
+"TR"), time="2019-02-19 2020-10-11", low_search_volume = T) 
+
+```
+```{r calculate means }
+de_ua_th_tr_interests<-gtrendsresultde$interest_over_time
+de_2019<-subset(de_ua_th_tr_interests, geo=="DE" & date > "2019-03-22" & date < "2019-05-04")
+de_2020<-subset(de_ua_th_tr_interests, geo=="DE" & date > "2020-03-22" & date < "2020-05-04")
+mean(de_2019$hits)
+mean(de_2020$hits)
+
+ua_2019<-subset(de_ua_th_tr_interests, geo=="UA" & date > "2019-03-12" & date < "2019-05-12")
+ua_2020<-subset(de_ua_th_tr_interests, geo=="UA" & date > "2020-03-12" & date < "2020-05-12")
+mean(ua_2019$hits)
+mean(ua_2020$hits)
+
+th_2019<-subset(de_ua_th_tr_interests, geo=="TH" & date > "2019-03-26" & date < "2019-05-31")
+th_2020<-subset(de_ua_th_tr_interests, geo=="TH" & date > "2020-03-26" & date < "2020-05-31")
+mean(th_2019$hits)
+mean(th_2020$hits)
+
+tr_2019<-subset(de_ua_th_tr_interests, geo=="TR" & date > "2019-03-21" & date < "2019-05-27")
+tr_2020<-subset(de_ua_th_tr_interests, geo=="TR" & date > "2020-03-21" & date < "2020-05-27")
+mean(tr_2019$hits)
+mean(tr_2020$hits)
+
+```
+```{r calculate means 2}
+  
+ar_my_ph_id_sg_interests<-gtrendsresultar$interest_over_time
+ar_2019<-subset(ar_my_ph_id_sg_interests, geo=="AR" & date > "2019-03-20" & date < "2019-06-07")
+ar_2020<-subset(ar_my_ph_id_sg_interests, geo=="AR" & date > "2020-03-20" & date < "2020-06-07")
+mean(ar_2019$hits)
+mean(ar_2020$hits)
+
+my_2019<-subset(ar_my_ph_id_sg_interests, geo=="MY" & date > "2019-03-18" & date < "2019-05-31")
+my_2020<-subset(ar_my_ph_id_sg_interests, geo=="MY" & date > "2020-03-18" & date < "2020-05-31")
+mean(my_2019$hits)
+mean(my_2020$hits)
+
+ph_2019<-subset(ar_my_ph_id_sg_interests, geo=="PH" & date > "2019-03-14" & date < "2019-04-30")
+ph_2020<-subset(ar_my_ph_id_sg_interests, geo=="PH" & date > "2020-03-14" & date < "2020-04-30")
+mean(ph_2019$hits)
+mean(ph_2020$hits)
+
+id_2019<-subset(ar_my_ph_id_sg_interests, geo=="ID" & date > "2019-09-25" & date < "2019-10-11")
+id_2020<-subset(ar_my_ph_id_sg_interests, geo=="ID" & date > "2020-09-25" & date < "2020-10-11")
+mean(id_2019$hits)
+mean(id_2020$hits)
+
+sg_2019<-subset(ar_my_ph_id_sg_interests, geo=="SG" & date > "2019-04-07" & date < "2019-06-01")
+sg_2020<-subset(ar_my_ph_id_sg_interests, geo=="SG" & date > "2020-04-07" & date < "2020-06-01")
+mean(sg_2019$hits)
+mean(sg_2020$hits)
+
+```
+
+```{r calculate means 3}
+  
+ro_pk_kz_gr_eg_interests<-gtrendsresultro$interest_over_time
+ro_2019<-subset(ro_pk_kz_gr_eg_interests, geo=="RO" & date > "2019-03-11" & date < "2019-05-14")
+ro_2020<-subset(ro_pk_kz_gr_eg_interests, geo=="RO" & date > "2020-03-11" & date < "2020-05-14")
+mean(ro_2019$hits)
+mean(ro_2020$hits)
+
+pk_2019<-subset(ro_pk_kz_gr_eg_interests, geo=="PK" & date > "2019-03-23" & date < "2019-05-31")
+pk_2020<-subset(ro_pk_kz_gr_eg_interests, geo=="PK" & date > "2020-03-23" & date < "2020-05-31")
+mean(pk_2019$hits)
+mean(pk_2020$hits)
+
+kz_2019<-subset(ro_pk_kz_gr_eg_interests, geo=="KZ" & date > "2019-03-16" & date < "2019-05-11")
+kz_2020<-subset(ro_pk_kz_gr_eg_interests, geo=="KZ" & date > "2020-03-16" & date < "2020-05-11")
+mean(kz_2019$hits)
+mean(kz_2020$hits)
+
+gr_2019<-subset(ro_pk_kz_gr_eg_interests, geo=="GR" & date > "2019-03-23" & date < "2019-05-04")
+gr_2020<-subset(ro_pk_kz_gr_eg_interests, geo=="GR" & date > "2020-03-23" & date < "2020-05-04")
+mean(gr_2019$hits)
+mean(gr_2020$hits)
+
+eg_2019<-subset(ro_pk_kz_gr_eg_interests, geo=="EG" & date > "2019-03-17" & date < "2019-06-27")
+eg_2020<-subset(ro_pk_kz_gr_eg_interests, geo=="EG" & date > "2020-03-17" & date < "2020-06-27")
+mean(eg_2019$hits)
+mean(eg_2020$hits)
+
+```
+
+```{r calculate means 4}
+  
+ng_br_ca_rs_hk_interests<-gtrendsresultng$interest_over_time
+ng_2019<-subset(ng_br_ca_rs_hk_interests, geo=="NG" & date > "2019-03-30" & date < "2019-05-05")
+ng_2020<-subset(ng_br_ca_rs_hk_interests, geo=="NG" & date > "2020-03-30" & date < "2020-05-05")
+mean(ng_2019$hits)
+mean(ng_2020$hits)
+
+br_2019<-subset(ng_br_ca_rs_hk_interests, geo=="BR" & date > "2019-02-19" & date < "2019-06-06")
+br_2020<-subset(ng_br_ca_rs_hk_interests, geo=="BR" & date > "2020-02-19" & date < "2020-06-06")
+mean(br_2019$hits)
+mean(br_2020$hits)
+
+ca_2019<-subset(ng_br_ca_rs_hk_interests, geo=="CA" & date > "2019-03-16" & date < "2019-04-30")
+ca_2020<-subset(ng_br_ca_rs_hk_interests, geo=="CA" & date > "2020-03-16" & date < "2020-04-30")
+mean(ca_2019$hits)
+mean(ca_2020$hits)
+
+rs_2019<-subset(ng_br_ca_rs_hk_interests, geo=="RS" & date > "2019-03-20" & date < "2019-05-06")
+rs_2020<-subset(ng_br_ca_rs_hk_interests, geo=="RS" & date > "2020-03-20" & date < "2020-05-06")
+mean(rs_2019$hits)
+mean(rs_2020$hits)
+
+hk_2019<-subset(ng_br_ca_rs_hk_interests, geo=="HK" & date > "2019-02-19" & date < "2019-06-06")
+hk_2020<-subset(ng_br_ca_rs_hk_interests, geo=="HK" & date > "2020-02-19" & date < "2020-06-06")
+mean(hk_2019$hits)
+mean(hk_2020$hits)
+
+```
+
+```{r calculate means 5}
+  
+ec_co_jp_mx_cl_interests<-gtrendsresultec$interest_over_time
+ec_2019<-subset(ec_co_jp_mx_cl_interests, geo=="EC" & date > "2019-03-17" & date < "2019-08-12")
+ec_2020<-subset(ec_co_jp_mx_cl_interests, geo=="EC" & date > "2020-03-17" & date < "2020-08-12")
+mean(as.numeric(ec_2019$hits))
+mean(as.numeric(ec_2020$hits))
+
+co_2019<-subset(ec_co_jp_mx_cl_interests, geo=="CO" & date > "2019-03-20" & date < "2019-09-15")
+co_2020<-subset(ec_co_jp_mx_cl_interests, geo=="CO" & date > "2020-03-20" & date < "2020-09-15")
+mean(as.numeric(co_2019$hits))
+mean(as.numeric(co_2020$hits))
+
+jp_2019<-subset(ec_co_jp_mx_cl_interests, geo=="JP" & date > "2019-02-19" & date < "2019-06-06")
+jp_2020<-subset(ec_co_jp_mx_cl_interests, geo=="JP" & date > "2020-02-19" & date < "2020-06-06")
+jp_2019$hits[jp_2019$hits=="<1"]<-0
+mean(as.numeric(jp_2019$hits))
+mean(as.numeric(jp_2020$hits))
+
+mx_2019<-subset(ec_co_jp_mx_cl_interests, geo=="MX" & date > "2019-03-23" & date < "2019-06-01")
+mx_2020<-subset(ec_co_jp_mx_cl_interests, geo=="MX" & date > "2020-03-23" & date < "2020-06-01")
+mean(as.numeric(mx_2019$hits))
+mean(as.numeric(mx_2020$hits))
+
+cl_2019<-subset(ec_co_jp_mx_cl_interests, geo=="CL" & date > "2019-03-26" & date < "2019-08-16")
+cl_2020<-subset(ec_co_jp_mx_cl_interests, geo=="CL" & date > "2020-03-26" & date < "2020-08-16")
+mean(as.numeric(cl_2019$hits))
+mean(as.numeric(cl_2020$hits))
+
+```
+
+```{r calculate means 6}
+  
+au_pe_nz_pr_gt_interests<-gtrendsresultau$interest_over_time
+au_2019<-subset(au_pe_nz_pr_gt_interests, geo=="AU" & date > "2019-06-01" & date < "2019-07-30")
+au_2020<-subset(au_pe_nz_pr_gt_interests, geo=="AU" & date > "2020-06-01" & date < "2020-07-30")
+mean(au_2019$hits)
+mean(au_2020$hits)
+
+pe_2019<-subset(au_pe_nz_pr_gt_interests, geo=="PE" & date > "2019-03-16" & date < "2019-06-30")
+pe_2020<-subset(au_pe_nz_pr_gt_interests, geo=="PE" & date > "2020-03-16" & date < "2020-06-30")
+mean(pe_2019$hits)
+mean(pe_2020$hits)
+
+nz_2019<-subset(au_pe_nz_pr_gt_interests, geo=="NZ" & date > "2019-03-25" & date < "2019-06-08")
+nz_2020<-subset(au_pe_nz_pr_gt_interests, geo=="NZ" & date > "2020-03-25" & date < "2020-06-08")
+mean(nz_2019$hits)
+mean(nz_2020$hits)
+
+pr_2019<-subset(au_pe_nz_pr_gt_interests, geo=="PR" & date > "2019-03-20" & date < "2019-06-16")
+pr_2020<-subset(au_pe_nz_pr_gt_interests, geo=="PR" & date > "2020-03-20" & date < "2020-06-16")
+mean(pr_2019$hits)
+mean(pr_2020$hits)
+
+gt_2019<-subset(au_pe_nz_pr_gt_interests, geo=="GT" & date > "2019-03-21" & date < "2019-04-12")
+gt_2020<-subset(au_pe_nz_pr_gt_interests, geo=="GT" & date > "2020-03-21" & date < "2020-04-12")
+mean(gt_2019$hits)
+mean(gt_2020$hits)
+
+```
