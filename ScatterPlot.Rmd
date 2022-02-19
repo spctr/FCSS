@@ -1,0 +1,82 @@
+---
+title: "Integrating Survey Data with Digital Trace Data"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+#install.packages("scatterplot3d") # Install
+#install.packages("plot3D")
+#install.packages("dplyr")
+#install.packages("gtrendsR")
+library("scatterplot3d") # load
+library(dplyr)
+
+
+```
+## R Markdown
+
+This file reads the manually calculated means and plots them in 3d.
+```{r cars}
+library("scatterplot3d") # load
+library(dplyr)
+df_data_table <- read.csv("data_table_3.csv", sep = ";",fileEncoding="UTF-8-BOM")
+df_data_table_dv<- df_data_table
+df_data_table_dv$abuse.helpline<-rep(NA,6)
+df_data_table_dv$abusive.relationship<-rep(NA,6)
+df_data_table_dv$emotional.abuse<-rep(NA,6)
+df_data_table_dv$psychological.abuse<-rep(NA,6)
+df_data_table_dv$domestic.violence.law<-rep(NA,6)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r scatter plots}
+draw_graph <- function(df_data_table,y,text,xlabel){
+x1 <- df.x <- df_data_table$abuse.helpline
+
+z <- df.z <- df_data_table$Jahr
+
+x2<-df_data_table$domestic.violence
+x3<-df_data_table$abusive.relationship
+x4<-df_data_table$emotional.abuse
+x5<-df_data_table$psychological.abuse
+x6<-df_data_table$domestic.violence.law
+x<-c(x1,x2,x3,x4,x5,x6)
+
+years<-rep(c(19,20),times=18)
+s<- rep(y, times=6)
+q<-rep(c(1,2,3,4,5,6),each=6)
+
+colors <- rep(c( "blue", "red","darkgreen"),each=2)
+colors <- rep(colors, times=6)
+
+
+spl<-scatterplot3d(s, q, x,color=colors,type='h',main = text, xlab = xlabel,
+                   y.ticklabs = c("abuse helpline","domestic violence","abusive relationship","emotional abuse","psychological abuse","domestic violence law"),
+              ylab = "",
+              zlab = "Google/Naver Mean",
+              y.margin.add = 3)
+
+
+legend("bottom",horiz = TRUE, legend = c("GER","KOR","TUR" ),
+      col =  c( "blue", "red","darkgreen"), inset = -0.35, xpd = TRUE, pch=20)
+
+spl.coords <- spl$xyz.convert(s,q, x) 
+text(spl.coords$x, 
+     spl.coords$y, labels = years,
+     cex= 0.7,pos = 4, col = "steelblue")
+}
+
+draw_graph(df_data_table_dv,df_data_table$mean,"WVS Q189 vs Search Terms","WVS Q189 mean")
+draw_graph(df_data_table,df_data_table$mean,"WVS Q189 vs Search Terms","WVS Q189 mean")
+draw_graph(df_data_table,df_data_table$X..never.justifiable,"WVS Q189 vs Search Terms","WVS Q189 % never justified")
+draw_graph(df_data_table,df_data_table$lifetime.prevalence,"OECD vs Search Terms","OECD lifetime prevalence")
+draw_graph(df_data_table,df_data_table$laws,"OECD vs Search Terms","OECD laws")
+draw_graph(df_data_table,df_data_table$attitudes,"OECD vs Search Terms","OECD attitudes")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
