@@ -21,7 +21,7 @@ This file reads the manually calculated means and plots them in 3d.
 ```{r cars}
 library("scatterplot3d") # load
 library(dplyr)
-df_data_table <- read.csv("data_table_3.csv", sep = ";",fileEncoding="UTF-8-BOM")
+df_data_table <- read.csv("data_table.csv", sep = ";",fileEncoding="UTF-8-BOM")
 df_data_table_dv<- df_data_table
 df_data_table_dv$abuse.helpline<-rep(NA,6)
 df_data_table_dv$abusive.relationship<-rep(NA,6)
