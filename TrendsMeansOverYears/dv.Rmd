@@ -4,6 +4,8 @@ output:
   word_document: default
   html_document: default
 ---
+## R Markdown
+This file downloads google trends for the freebase keyword "domestic violence (/m/02gr_)" and calculates means for the lockdown intervals of individual countries for the years 2019 and 2020. A relatedqueries.csv file is also created to see what search terms may have been part of the calculated means.
 
 ```{r download data, include=FALSE}
 library(gtrendsR)
@@ -46,7 +48,10 @@ gtrendsresultde <- gtrends(keyword = "/m/02gr_", geo = c(
 "UA",
 "TH",
 "TR"), time="2019-02-19 2020-10-11", low_search_volume = T) 
-
+relatedqueries<-do.call("rbind", list(gtrendsresultau$related_queries, gtrendsresultec$related_queries, gtrendsresultng$related_queries,
+gtrendsresultar$related_queries,gtrendsresultro$related_queries,
+gtrendsresultde$related_queries$related_queries))
+write.csv(relatedqueries,"relatedqueries.csv", row.names = FALSE)
 ```
 ```{r calculate means }
 de_ua_th_tr_interests<-gtrendsresultde$interest_over_time
